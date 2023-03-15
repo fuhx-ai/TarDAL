@@ -11,8 +11,8 @@ from config import from_dict
 if __name__ == '__main__':
     # args parser
     parser = argparse.ArgumentParser()
-    parser.add_argument('--cfg', default='config/default.yaml', help='config file path')
-    parser.add_argument('--auth', help='wandb auth api key')
+    parser.add_argument('--cfg', default='config/official/train/tardal-ct-tst.yaml', help='config file path')
+    parser.add_argument('--auth', default=f'49deeeb7e29fb1acb9e77e00885bc52d739dee0f', help='wandb auth api key')
     args = parser.parse_args()
 
     # init config

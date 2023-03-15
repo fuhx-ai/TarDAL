@@ -76,9 +76,22 @@ class Detect:
         # criterion (reference: YOLOv5 official)
         self.loss = ComputeLoss(net)
 
-    def load_ckpt(self, ckpt: dict):
-        ckpt = ckpt if 'detect' not in ckpt else ckpt['detect']
-        self.net.load_state_dict(ckpt)
+    def load_ckpt(self, ckpt: dict):  # 仿照yolov5load修改
+        if 'detect' in ckpt:  # 训练后保存的模型
+            self.net.load_state_dict(ckpt['detect'])
+        else:  # yolov5模型
+            ckpt = ckpt['model']
+            csd = ckpt.float().state_dict()
+            self.net.load_state_dict(csd)
+
+        # net_dict = self.net.state_dict()
+        # exclude = ['anchor']
+        # csd = self.intersect_dicts(csd, self.net.state_dict(), exclude=exclude)  # intersect
+        # self.net.load_state_dict(csd, strict=False)
+
+    # def intersect_dicts(self, da, db, exclude=()):
+    #     # Dictionary intersection of matching keys and shapes, omitting 'exclude' keys, using da values
+    #     return {k: v for k, v in da.items() if k in db and not any(x in k for x in exclude) and v.shape == db[k].shape}
 
     def load_ckpt_fuse(self, ckpt: dict):
         ckpt = ckpt if 'detect' not in ckpt else ckpt['detect']

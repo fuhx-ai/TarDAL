@@ -13,12 +13,19 @@ runs/*
 # experimental data
 data/*
 !data/README.md
+!data/show_img.py
+!data/deal_dataset.py
 
 # weights (update by release)
 weights/*
+!weights/v1/ct-fus-yolov5s.pt
+!weights/v1/yolov5s.pt
 
 # test files
 **/test/*
 
 # wandb
 wandb/*
+
+# cache
+cache/*

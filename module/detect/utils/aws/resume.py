@@ -31,9 +31,9 @@ for last in path.rglob('*/**/last.pt'):
 
     if ddp:  # multi-GPU
         port += 1
-        cmd = f'python -m torch.distributed.run --nproc_per_node {nd} --master_port {port} trainfd.py --resume {last}'
+        cmd = f'python -m torch.distributed.run --nproc_per_node {nd} --master_port {port} train.py --resume {last}'
     else:  # single-GPU
-        cmd = f'python trainfd.py --resume {last}'
+        cmd = f'python train.py --resume {last}'
 
     cmd += ' > /dev/null 2>&1 &'  # redirect output to dev/null and run in daemon thread
     print(cmd)

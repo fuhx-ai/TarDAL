@@ -1,5 +1,6 @@
 import logging
 import sys
+from copy import deepcopy
 from pathlib import Path
 from typing import Literal, List, Tuple, Optional
 
@@ -78,22 +79,22 @@ class Fuse:
         # WGAN div hyper parameters
         self.wk, self.wp = 2, 6
 
-    def load_ckpt(self, ckpt: dict):
-        f_ckpt = ckpt if 'fuse' not in ckpt else ckpt['fuse']
+    def load_ckpt(self, ckpt: dict):  # 引入参数csd，修改discriminator网络参数无法导入的bug
+        csd = ckpt if 'fuse' not in ckpt else ckpt['fuse']
 
         # check eval mode
         if self.config.inference.use_eval is None:
-            if 'use_eval' in f_ckpt:
-                logging.warning(f'overwriting inference.use_eval {self.config.inference.use_eval} with {f_ckpt["use_eval"]}')
-                self.config.inference.use_eval = f_ckpt['use_eval']
+            if 'use_eval' in csd:
+                logging.warning(f'overwriting inference.use_eval {self.config.inference.use_eval} with {csd["use_eval"]}')
+                self.config.inference.use_eval = csd['use_eval']
             else:
                 logging.warning(f'no use_eval settings found, using default (true)')
                 self.config.inference.use_eval = True
-        if 'use_eval' in f_ckpt:
-            f_ckpt.pop('use_eval')
+        if 'use_eval' in csd:
+            csd.pop('use_eval')
 
         # load state dict
-        self.generator.load_state_dict(f_ckpt)
+        self.generator.load_state_dict(csd)
         if self.mode == 'train' and 'disc' in ckpt:
             self.dis_t.load_state_dict(ckpt['disc']['t'])
             self.dis_d.load_state_dict(ckpt['disc']['d'])

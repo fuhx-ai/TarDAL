@@ -18,7 +18,7 @@ strategy : fuse & detect
 fuse     :
   dim       : 32 # features base dimensions for generator and discriminator
   depth     : 3 # depth of dense architecture
-  pretrained: weights/v1/tardal-ct.pth # ~: disable, path or url: load with pretrained parameters
+  pretrained: weights/v1/00054-0.2806.pth # ~: disable, path or url: load with pretrained parameters
 
 # detect network settings: available if framework in joint mode (detect, fuse + detect)
 detect   :
@@ -54,9 +54,9 @@ dataset  :
 # train settings:
 train    :
   image_size   : [ 320, 320 ] # training image size in (h, w)
-  batch_size   : 8 # batch size used to train
+  batch_size   : 16 # batch size used to train
   num_workers  : 4 # number of workers used in data loading
-  epochs       : 300 # number of epochs to train
+  epochs       : 200 # number of epochs to train
   eval_interval: 1 # evaluation interval during training
   save_interval: 5 # save interval during training
   freeze       : [ ]  # freeze layers (e.g. backbone, head, ...)

@@ -240,7 +240,8 @@ class Fuse:
                 return 0.01 * ssim_loss(x, y, window_size=11) + 0.99 * l1_loss(x, y)
             case 'v1':
                 "fus <- ms-ssim -> src"
-                return self.ms_ssim_loss(x, y)
+                # return self.ms_ssim_loss(x, y)
+                return 0.01 * ssim_loss(x, y, window_size=11) + 0.99 * l1_loss(x, y)
             case _:
                 assert NotImplemented, f'unsupported src function: {src_fn}'
 

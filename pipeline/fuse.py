@@ -145,17 +145,17 @@ class Fuse:
 
         # loss calculate
         real_l, fake_l = -real_v.mean(), fake_v.mean()
-        if real_l > 10 or real_l < -10 or fake_l < -10 or fake_l > 10:
-            print('abnormal loss,')
-            print('real_l =', real_l)
-            print('fake_l =', fake_l)
+        # if real_l > 10 or real_l < -10 or fake_l < -10 or fake_l > 10:
+        #     print('abnormal loss,')
+        #     print('real_l =', real_l)
+        #     print('fake_l =', fake_l)
 
         div = div_loss(self.dis_t, real_s, fake_s, self.wp)
         loss = real_l + fake_l + self.wk * div
 
-        if loss > 100 or loss.isnan():
-            print('abnormal loss,')
-            print('loss =', loss)
+        # if loss > 100 or loss.isnan():
+        #     print('abnormal loss,')
+        #     print('loss =', loss)
 
         return loss
 
@@ -182,16 +182,16 @@ class Fuse:
 
         # loss calculate
         real_l, fake_l = -real_v.mean(), fake_v.mean()
-        if real_l > 10 or real_l < -10 or fake_l < -10 or fake_l > 10:
-            print('abnormal loss,')
-            print('real_l =', real_l)
-            print('fake_l =', fake_l)
+        # if real_l > 10 or real_l < -10 or fake_l < -10 or fake_l > 10:
+        #     print('abnormal loss,')
+        #     print('real_l =', real_l)
+        #     print('fake_l =', fake_l)
         div = div_loss(self.dis_d, real_s, fake_s, self.wp)
         loss = real_l + fake_l + self.wk * div
 
-        if loss > 100 or loss.isnan():
-            print('abnormal loss,')
-            print('loss =', loss)
+        # if loss > 100 or loss.isnan():
+        #     print('abnormal loss,')
+        #     print('loss =', loss)
 
         return loss
 
@@ -218,9 +218,9 @@ class Fuse:
         adv_l, tar_l, det_l = self.adv_loss(fus, mk)
         loss = src_w * src_l.mean() + adv_w * adv_l.mean()
 
-        if loss > 100 or loss.isnan():
-            print('abnormal loss,')
-            print('loss =', loss)
+        # if loss > 100 or loss.isnan():
+        #     print('abnormal loss,')
+        #     print('loss =', loss)
 
         # only fuse
         return loss, [src_l.mean().item(), adv_l.mean().item(), tar_l, det_l]

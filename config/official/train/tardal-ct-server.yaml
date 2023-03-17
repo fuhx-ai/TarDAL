@@ -54,7 +54,7 @@ dataset  :
 # train settings:
 train    :
   image_size   : [ 320, 320 ] # training image size in (h, w)
-  batch_size   : 16 # batch size used to train
+  batch_size   : 8 # batch size used to train
   num_workers  : 4 # number of workers used in data loading
   epochs       : 300 # number of epochs to train
   eval_interval: 1 # evaluation interval during training
@@ -63,7 +63,7 @@ train    :
 
 # inference settings:
 inference:
-  batch_size : 8 # batch size used to train
+  batch_size : 4 # batch size used to train
   num_workers: 4 # number of workers used in data loading
   use_eval   : true # use eval mode in inference mode, default true, false for v0 weights.
   grayscale  : false # ignore dataset settings, save as grayscale image

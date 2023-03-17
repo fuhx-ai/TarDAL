@@ -68,7 +68,7 @@ class Fuse:
 
         # criterion
         if config.loss.fuse.src_fn == 'v1':
-            ms_ssim_loss = MS_SSIMLoss(compensation=1)
+            ms_ssim_loss = MS_SSIMLoss(compensation=100)
             modules.append(ms_ssim_loss)
             self.ms_ssim_loss = ms_ssim_loss
 

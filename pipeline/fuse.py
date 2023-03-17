@@ -68,7 +68,7 @@ class Fuse:
 
         # criterion
         if config.loss.fuse.src_fn == 'v1':
-            ms_ssim_loss = MS_SSIMLoss()
+            ms_ssim_loss = MS_SSIMLoss(compensation=1)
             modules.append(ms_ssim_loss)
             self.ms_ssim_loss = ms_ssim_loss
 
@@ -77,7 +77,8 @@ class Fuse:
 
         # more parameters
         # WGAN div hyper parameters
-        self.wk, self.wp = 2, 6
+        # self.wk, self.wp = 2, 6
+        self.wk, self.wp = 0.5, 0.5
 
     def load_ckpt(self, ckpt: dict):  # 引入参数csd，修改discriminator网络参数无法导入的bug
         csd = ckpt if 'fuse' not in ckpt else ckpt['fuse']
@@ -144,8 +145,17 @@ class Fuse:
 
         # loss calculate
         real_l, fake_l = -real_v.mean(), fake_v.mean()
+        if real_l > 10 or real_l < -10 or fake_l < -10 or fake_l > 10:
+            print('abnormal loss,')
+            print('real_l =', real_l)
+            print('fake_l =', fake_l)
+
         div = div_loss(self.dis_t, real_s, fake_s, self.wp)
         loss = real_l + fake_l + self.wk * div
+
+        if loss > 100 or loss.isnan():
+            print('abnormal loss,')
+            print('loss =', loss)
 
         return loss
 
@@ -172,8 +182,16 @@ class Fuse:
 
         # loss calculate
         real_l, fake_l = -real_v.mean(), fake_v.mean()
+        if real_l > 10 or real_l < -10 or fake_l < -10 or fake_l > 10:
+            print('abnormal loss,')
+            print('real_l =', real_l)
+            print('fake_l =', fake_l)
         div = div_loss(self.dis_d, real_s, fake_s, self.wp)
         loss = real_l + fake_l + self.wk * div
+
+        if loss > 100 or loss.isnan():
+            print('abnormal loss,')
+            print('loss =', loss)
 
         return loss
 
@@ -192,9 +210,17 @@ class Fuse:
         f_loss = self.config.loss.fuse
         src_w, adv_w = f_loss.src, f_loss.adv
         adv_w = 0 if d_warming else adv_w
+        a1 = self.src_loss(fus, ir)
+        a2 = self.src_loss(fus, vi)
+        b1 = w1 * a1
+        b2 = w2 * a2
         src_l = w1 * self.src_loss(fus, ir) + w2 * self.src_loss(fus, vi)
         adv_l, tar_l, det_l = self.adv_loss(fus, mk)
         loss = src_w * src_l.mean() + adv_w * adv_l.mean()
+
+        if loss > 100 or loss.isnan():
+            print('abnormal loss,')
+            print('loss =', loss)
 
         # only fuse
         return loss, [src_l.mean().item(), adv_l.mean().item(), tar_l, det_l]

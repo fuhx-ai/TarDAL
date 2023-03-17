@@ -46,7 +46,7 @@ class TrainFD:
 
         # wandb run
         wandb.login(key=wandb_key)  # wandb api key
-        runs = wandb.init(project='TarDAL-v1', config=config, mode=config.debug.wandb_mode)
+        runs = wandb.init(project='TarDAL-v1-tst', config=config, mode=config.debug.wandb_mode)
         self.runs = runs
 
         # init save folder

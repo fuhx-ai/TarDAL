@@ -12,7 +12,7 @@ if __name__ == '__main__':
     # args parser
     parser = argparse.ArgumentParser()
     parser.add_argument('--cfg', default='config/official/infer/tardal-tst.yaml', help='config file path')
-    parser.add_argument('--save_dir', default='runs/tardal-tst-ct-2', help='fusion result save folder')
+    parser.add_argument('--save_dir', default='runs/tardal-tst-ct-1', help='fusion result save folder')
     args = parser.parse_args()
 
     # init config

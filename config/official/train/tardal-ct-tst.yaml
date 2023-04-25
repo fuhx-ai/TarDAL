@@ -18,7 +18,7 @@ strategy : fuse & detect
 fuse     :
   dim       : 32 # features base dimensions for generator and discriminator
   depth     : 3 # depth of dense architecture
-  pretrained: weights/v1/00054-0.2806.pth # ~: disable, path or url: load with pretrained parameters
+  pretrained: weights/v1/00176-0.3102.pth # ~: disable, path or url: load with pretrained parameters
 
 # detect network settings: available if framework in joint mode (detect, fuse + detect)
 detect   :

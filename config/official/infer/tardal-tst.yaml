@@ -18,13 +18,13 @@ strategy : fuse & detect
 fuse     :
   dim       : 32 # features base dimensions for generator and discriminator
   depth     : 3 # depth of dense architecture
-  pretrained: weights/v1/00054-0.2806.pth # ~: disable, path or url: load with pretrained parameters
+  pretrained: weights/v1/00176-0.3102.pth # ~: disable, path or url: load with pretrained parameters
 
 # detect network settings: available if framework in joint mode (detect, fuse + detect)
 detect   :
   model     : yolov5s # yolo model (yolov5 n,s,m,l,x)
   channels  : 3 # input channels (3: rgb or 1: grayscale)
-  pretrained:  weights/v1/ct-fus-yolov5s.pt # ~: disable, path or url: load with pretrained parameters
+  pretrained:  weights/v1/ct-fus-yolov5s.pt # ~: disable, path or url: load with pretrained parameters  weights/v1/ct-fus-yolov5s.pt
 
 # saliency network settings: generating mask for training tardal
 saliency :
@@ -62,7 +62,7 @@ train    :
 
 # inference settings:
 inference:
-  batch_size : 4 # batch size used to train
+  batch_size : 2 # batch size used to train
   num_workers: 0 # number of workers used in data loading
   use_eval   : ~ # use eval mode in inference mode, default true, false for v0 weights.
   grayscale  : false # ignore dataset settings, save as grayscale image
